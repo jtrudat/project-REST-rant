@@ -19,4 +19,4 @@ REST-Rant is an app where users can review restaurants.
 
 data to be stored:
 
-| name (string) | city (string) | state (string) | pic |
+| restaurant name (string) | city (string) | state (string) | pic |
