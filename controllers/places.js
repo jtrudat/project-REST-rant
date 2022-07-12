@@ -1,30 +1,19 @@
 let router = require('express').Router()
+let places = require('../models/places.js')
 //GET /places
 router.get('/', (req, res)=>{
     console.log('arrived at subcategory places')
-    let places = [{
-        name: 'H-Thai-ML',
-        city: 'Seattle',
-        state: 'WA',
-        cuisines: 'Thai, Pan-Asian',
-        pic: src= "images/food1.jpg"
-      }, {
-        name: 'Coding Cat Cafe',
-        city: 'Phoenix',
-        state: 'AZ',
-        cuisines: 'Coffee, Bakery',
-        pic: 'images/food2.jpg'
-      }]
-      
     res.render('places/index', {places})
 })
 
-//New places
+//CREATE places
 router.post('/', (req, res) => {
     console.log(req.body)
-    res.send('POST /places')
+    places.push(req.body)
+    res.redirect('/places')
   })
 
+//NEW places
 router.get('/new', (req, res) => {
     res.render('places/new')
   })

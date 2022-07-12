@@ -28,6 +28,9 @@ function new_form(){
                         <input className="form-control" id="cuisines" name="cuisines" required></input>
                     </div>
                     <input className="btn btn-primary" type="submit" value="Add Place"></input>
+                    <div className="btn btn-primary">
+            <a href="/places"><input type="button" value="Go back to the list of places"></input></a>
+          </div>
                 </form>
             </main>
         </Def>
