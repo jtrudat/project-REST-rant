@@ -9,6 +9,16 @@ router.get('/', (req, res)=>{
 //Creating pt2 Adding NEWLY created places (routing a newly created place to the list of all places)
 router.post('/', (req, res) => {
     console.log(req.body)
+    if (!req.body.pic) {
+        // Default image if one is not provided
+        req.body.pic = 'http://placekitten.com/400/400'
+      }
+      if (!req.body.city) {
+        req.body.city = 'Anytown'
+      }
+      if (!req.body.state) {
+        req.body.state = 'USA'
+      }
     places.push(req.body)
     res.redirect('/places')
   })
@@ -40,7 +50,17 @@ router.get('/:id', (req, res) => {
 
 //DELETE (routing to remove an itme by its index)
 router.delete('/:id', (req, res) => {
-    res.send('DELETE /places/:id stub')
+    let id =Number(req.params.id)
+    if(isNaN(id)){
+        res.render('error404')
+    }
+    else if (!places[id]){
+        res.render('error404')
+    }
+    else {
+        places.splice(id, 1)
+        res.redirect('/places')
+    }
 })  
 
 //EDIT pt 1 (routing to a specific item, make changes) 
