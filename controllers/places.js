@@ -32,7 +32,14 @@ router.get('/new', (req, res) => {
   
 //SHOW (routing to the page displaying a particular item menu in detail (/:id = places/id index number) )
 router.get('/:id', (req, res) => {
-    res.send('GET /places/:id route stub good check')
+    db.Place.findById(req.params.id)
+    .then((place)=>{
+      res.render('places/show', {place})
+    })
+    .catch((err)=>{
+      console.log('err, err')
+      res.render('error404')
+    })
   })
  
 //EDIT pt2 (then reposting that items index with changes)  
