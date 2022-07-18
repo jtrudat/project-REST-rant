@@ -1,7 +1,7 @@
 let router = require('express').Router()
 let db = require('../models')
 
-//GET /places (route to the list of all places)
+//GET INDEX /places (route to the list of all places)
 router.get('/', (req, res)=>{
     db.Place.find()
     .then((places)=>{
@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
       res.render('places/show', {place})
     })
     .catch((err)=>{
-      console.log('err, err')
+      console.log('err', err)
       res.render('error404')
     })
   })
@@ -49,7 +49,16 @@ router.get('/:id', (req, res) => {
 
 //DELETE (routing to remove an itme by its index)
 router.delete('/:id', (req, res) => {
-    res.send('DELETE /places/:id route stub good check')
+  db.Place.findByIdAndDelete(req.params.id)
+  .then((deletedPlace) =>{
+    res.redirect('/places')
+    console.log(deletedPlace)
+  })
+  .catch((err) =>{
+    console.log('err', err)
+    res.render('error404')
+  })
+  // res.send('DELETE /places/:id route stub good check')
 })  
 
 //EDIT pt 1 (routing to a specific item, make changes) 
