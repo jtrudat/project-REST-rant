@@ -14,7 +14,7 @@ function edit_form (data) {
                     </div>
                     <div className="form-group col-sm-6">
                         <label htmlFor="pic">Place Picture</label>
-                        <input className="form-control" type="url" id="pic" name="pic" defaultValue={data.place.pic}></input>
+                        <input className="form-control" id="pic" name="pic" defaultValue={data.place.pic}></input>
                     </div>
                     <div className="form-group col-sm-6">
                         <label htmlFor="city">City</label>
