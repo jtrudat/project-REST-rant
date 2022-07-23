@@ -76,6 +76,12 @@ router.post('/:id/comment', (req, res)=>{
   console.log(req.body)
   db.Place.findById(req.params.id)
   .then((place)=>{
+    if(req.body.rant === 'on'){
+      req.body.rant = true
+    }
+    else{
+      req.body.rant = false
+    }
     db.Comment.create(req.body)
     .then((comment)=>{
       place.comments.push(comment.id)
