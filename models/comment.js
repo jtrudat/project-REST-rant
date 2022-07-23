@@ -2,11 +2,11 @@ let mongoose = require('mongoose')
 let commentSchema = new mongoose.Schema({
     author: {
         type: String,
-        defaultValue: 'Anonymous',
+        default: 'Anonymous',
     },
     rant: {
         type: Boolean,
-        defaultValue: false,
+        default: false,
     },
     stars: {
         type: Number,
@@ -14,7 +14,7 @@ let commentSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        defaultValue: '',
+        default: '',
     }
 })
 

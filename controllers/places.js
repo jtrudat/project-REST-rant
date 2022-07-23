@@ -33,6 +33,9 @@ router.get('/new', (req, res) => {
 //SHOW (routing to the page displaying a particular item menu in detail (/:id = places/id index number) )
 router.get('/:id', (req, res) => {
     db.Place.findById(req.params.id)
+    db.Place.findOne({
+      _id: req.params.id,
+    })
     .populate('comments')
     .then((place)=>{
       console.log(place.comments)
@@ -69,13 +72,30 @@ router.get('/:id/edit', (req, res) => {
 })
 
 //POST RANTS routing
-router.post('/:id/rant', (req, res)=>{
-  res.send('GET /places/:id/rant route stub good check')
+router.post('/:id/comment', (req, res)=>{
+  console.log(req.body)
+  db.Place.findById(req.params.id)
+  .then((place)=>{
+    db.Comment.create(req.body)
+    .then((comment)=>{
+      place.comments.push(comment.id)
+      place.save()
+      .then(()=>{
+        res.redirect(`/places/${req.params.id}`)
+      })
+    })
+    .catch((err)=>{
+      res.render('error404')
+    })
+  })
+  .catch((err)=>{
+    res.redirect('error404')
+  })
 })
 
 //DELETE RANTS routing
-router.delete('/:id/rant/:rantId', (req, res)=>{
-  res.send('DELETE /places/:id/rant/:rantId route stub good check')
+router.delete('/:id/comment/commentId', (req, res)=>{
+  res.send('DELETE /places/:id/comment/:commentId route stub good check')
 })
 
 module.exports = router
