@@ -33,7 +33,9 @@ router.get('/new', (req, res) => {
 //SHOW (routing to the page displaying a particular item menu in detail (/:id = places/id index number) )
 router.get('/:id', (req, res) => {
     db.Place.findById(req.params.id)
+    .populate('comments')
     .then((place)=>{
+      console.log(place.comments)
       res.render('places/show', {place})
     })
     .catch((err)=>{
