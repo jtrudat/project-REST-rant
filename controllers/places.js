@@ -47,17 +47,25 @@ router.get('/:id', (req, res) => {
     })
   })
  
-//EDIT pt2 (then reposting that items index with changes)  
+//EDIT route, submitting to places, pt2 (then reposting that items index with changes)  
   router.put('/:id', (req, res) => {
-    res.send('PUT /places/:id route stub good check')
+    db.Place.findByIdAndUpdate(req.params.id, req.body)
+    .then(()=>{
+      console.log(req.body)
+      res.redirect(`/places/${req.params.id}`)
+    })
+    .catch((err)=>{
+      console.log('err', err)
+      res.render('error404')
+    })
 })
 
 //DELETE (routing to remove an itme by its index)
 router.delete('/:id', (req, res) => {
   db.Place.findByIdAndDelete(req.params.id)
   .then((deletedPlace) =>{
-    res.redirect('/places')
     console.log(deletedPlace)
+    res.redirect('/places')
   })
   .catch((err) =>{
     console.log('err', err)
@@ -66,9 +74,16 @@ router.delete('/:id', (req, res) => {
   // res.send('DELETE /places/:id route stub good check')
 })  
 
-//EDIT pt 1 (routing to a specific item, make changes) 
+//EDIT route, updating edit form, pt 1 (routing to a specific item, make changes) 
 router.get('/:id/edit', (req, res) => {
-    res.send('GET /places/:id/edit form route stub good check')
+    db.Place.findById(req.params.id)
+    .then((place)=>{
+      console.log(place)
+      res.render('places/edit', {place})
+    })
+    .catch((err)=>{
+      res.render('error404')
+    })
 })
 
 //POST RANTS routing
@@ -99,9 +114,17 @@ router.post('/:id/comment', (req, res)=>{
   })
 })
 
-//DELETE RANTS routing
-router.delete('/:id/comment/commentId', (req, res)=>{
-  res.send('DELETE /places/:id/comment/:commentId route stub good check')
+//DELETE RANTS comments routing
+router.delete('/:id/comment/:commentId', (req, res)=>{
+  db.Comment.findByIdAndDelete(req.params.commentId)
+  .then(()=>{
+    console.log('DELETED',req.params.commentId)
+    res.redirect(`/places/${req.params.id}`)
+  })
+  .catch((err)=>{
+    console.log('err', err)
+    res.render('error404')
+  })
 })
 
 module.exports = router
